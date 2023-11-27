@@ -1,7 +1,7 @@
 "use strict";
 
 const Sequelize = require("sequelize");
-const env = "development";
+const env = "production";
 const config = require("../config")[env];
 const { database, username, password } = config;
 
