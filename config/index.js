@@ -1,4 +1,13 @@
-const { USER, PASSWORD, DATABASE, HOST } = require("../constants");
+const {
+  USER,
+  PASSWORD,
+  DATABASE,
+  HOST,
+  PRODUCTION_USER,
+  PRODUCTION_PASSWORD,
+  PRODUCTION_DATABASE,
+  PRODUCTION_HOST,
+} = require("../constants");
 
 const development = {
   "username": USER,
@@ -17,10 +26,10 @@ const test = {
 };
 
 const production = {
-  "username": USER,
-  "password": PASSWORD,
-  "database": DATABASE,
-  "host": HOST,
+  "username": PRODUCTION_USER,
+  "password": PRODUCTION_PASSWORD,
+  "database": PRODUCTION_DATABASE,
+  "host": PRODUCTION_HOST,
   "dialect": "mysql",
 };
 
