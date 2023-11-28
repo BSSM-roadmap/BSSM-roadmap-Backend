@@ -1,33 +1,33 @@
 const models = require("../models");
 
 const getRoadmapData = async () => {
-  const data = await models.Roadmap.findAll();
-  const a = [...data];
-  let b = [];
+  const roadmap = await models.Roadmap.findAll();
+  const copiedData = [...roadmap];
+  let data = [];
 
-  for (let i = 0; i < a.length; i++) {
-    b[i] = a[i].dataValues;
+  for (let i = 0; i < copiedData.length; i++) {
+    data[i] = copiedData[i].dataValues;
   }
 
-  return b;
+  return data;
 };
 
 const getUserRoadmapData = async (userId) => {
-  const data = await models.Roadmap.findAll({ where: { userId } });
-  const a = [...data];
-  let b = [];
+  const roadmap = await models.Roadmap.findAll({ where: { userId } });
+  const copiedData = [...roadmap];
+  let data = [];
 
-  for (let i = 0; i < a.length; i++) {
-    b[i] = a[i].dataValues;
+  for (let i = 0; i < copiedData.length; i++) {
+    data[i] = copiedData[i].dataValues;
   }
 
-  return b;
+  return data;
 };
 
 const addRoadmap = async (userId, steps) => {
-  const a = [...steps];
-  const b = a.join(",");
-  const data = await models.Roadmap.create({ userId, steps: b });
+  const copiedSteps = [...steps];
+  const newSteps = copiedSteps.join(",");
+  const data = await models.Roadmap.create({ userId, steps: newSteps });
   return data;
 };
 
@@ -37,6 +37,10 @@ const getSelectedRoadmapData = async (roadmapId) => {
 };
 
 const updateSelectedRoadmap = async (roadmapId, newSteps) => {
+  const selectedRoadmap = await models.Roadmap.findOne({
+    where: { roadmapId },
+  });
+  if (selectedRoadmap === null) return null;
   const data = await models.Roadmap.update(
     { steps: newSteps },
     { where: { roadmapId } },
@@ -45,6 +49,10 @@ const updateSelectedRoadmap = async (roadmapId, newSteps) => {
 };
 
 const deleteSelectedRoadmapData = async (roadmapId) => {
+  const selectedRoadmap = await models.Roadmap.findOne({
+    where: { roadmapId },
+  });
+  if (selectedRoadmap === null) return null;
   const data = await models.Roadmap.destroy({ where: { roadmapId } });
   return data;
 };

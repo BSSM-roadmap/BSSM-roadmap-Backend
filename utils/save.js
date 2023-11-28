@@ -1,15 +1,19 @@
 const models = require("../models");
 
 const addSave = async (userId, roadmapId) => {
-  const a = await models.Roadmap.findOne({ where: { roadmapId } });
-  if (a === null) return null;
+  const selectedRoadmap = await models.Roadmap.findOne({
+    where: { roadmapId },
+  });
+  if (selectedRoadmap === null) return null;
   const data = await models.Save.create({ userId, roadmapId });
   return data;
 };
 
 const deleteSave = async (userId, roadmapId) => {
-  const a = await models.Save.findOne({ where: { userId, roadmapId } });
-  if (a === null) return null;
+  const selectedSave = await models.Save.findOne({
+    where: { userId, roadmapId },
+  });
+  if (selectedSave === null) return null;
   const data = await models.Save.destroy({ where: { userId, roadmapId } });
   return data;
 };
@@ -21,13 +25,12 @@ const getSaveCount = async (roadmapId) => {
 
 const getUserSavedRoadmap = async (userId) => {
   const saveData = await models.Save.findAll({ where: { userId } });
-  console.log(saveData);
-  // let roadmapId = [];
-  // for (let i = 0; i < saveData.length; i++) {
-  //   roadmapId.push(saveData[0].dataValues.roadmapId);
-  // }
-  // const data = await models.Roadmap.findAll({ where: { roadmapId } });
-  // console.log(data);
+  let data = [];
+  for (let i = 0; i < saveData.length; i++) {
+    const roadmapId = saveData[i].dataValues.roadmapId;
+    const [roadmap] = await models.Roadmap.findAll({ where: { roadmapId } });
+    data[i] = roadmap;
+  }
   return data;
 };
 
