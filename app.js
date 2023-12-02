@@ -158,7 +158,9 @@ app.get("/roadmap/:roadmapId", async (request, response) => {
   try {
     const { roadmapId } = request.params;
     const data = await roadmap.getSelectedRoadmapData(roadmapId);
-    response.send(data.dataValues);
+    let { dataValues } = data;
+    dataValues.steps = dataValues.steps.split(",");
+    response.send(dataValues);
   } catch (error) {
     console.log(error);
     response.status(404).send("invalid roadmap");

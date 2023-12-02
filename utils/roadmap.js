@@ -26,7 +26,7 @@ const getUserRoadmapData = async (userId) => {
 
 const addRoadmap = async (userId, steps) => {
   const copiedSteps = [...steps];
-  const newSteps = copiedSteps.join(",");
+  const newSteps = copiedSteps.toString();
   const data = await models.Roadmap.create({ userId, steps: newSteps });
   return data;
 };
