@@ -6,7 +6,9 @@ const getRoadmapData = async () => {
   let data = [];
 
   for (let i = 0; i < copiedData.length; i++) {
-    data[i] = copiedData[i].dataValues;
+    let { dataValues } = copiedData[i];
+    dataValues.steps = dataValues.steps.split(",");
+    data[i] = dataValues;
   }
 
   return data;
@@ -18,7 +20,9 @@ const getUserRoadmapData = async (userId) => {
   let data = [];
 
   for (let i = 0; i < copiedData.length; i++) {
-    data[i] = copiedData[i].dataValues;
+    let { dataValues } = copiedData[i];
+    dataValues.steps = dataValues.steps.split(",");
+    data[i] = dataValues;
   }
 
   return data;
