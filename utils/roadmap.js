@@ -36,11 +36,13 @@ const getSelectedRoadmapData = async (roadmapId) => {
   return data;
 };
 
-const updateSelectedRoadmap = async (roadmapId, newSteps) => {
+const updateSelectedRoadmap = async (roadmapId, steps) => {
   const selectedRoadmap = await models.Roadmap.findOne({
     where: { roadmapId },
   });
   if (selectedRoadmap === null) return null;
+  const copiedSteps = [...steps];
+  const newSteps = copiedSteps.toString();
   const data = await models.Roadmap.update(
     { steps: newSteps },
     { where: { roadmapId } },
