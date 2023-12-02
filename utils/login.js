@@ -16,7 +16,7 @@ const generateToken = ({ ...rest }, expiresIn) => {
 
 const decodeToken = (token) => {
   try {
-    const data = jwt.verify(token, JWT_SECRET_KEY);
+    const data = jwt.decode(token, JWT_SECRET_KEY);
     return data;
   } catch (error) {
     console.log(error);
@@ -36,7 +36,7 @@ const loginUser = async (resource) => {
 
     const accessToken = generateToken(
       { userCode, userId: dataValues.userId },
-      "1h",
+      "5s",
     );
     const refreshToken = generateToken(
       { userCode, userId: dataValues.userId },
@@ -49,20 +49,4 @@ const loginUser = async (resource) => {
   }
 };
 
-const verifyUser = async (accessToken) => {
-  try {
-    const { userCode } = decodeToken(accessToken);
-    const data = await user.getSelectedUserData(userCode);
-
-    if (data === null) {
-      return false;
-    }
-
-    return true;
-  } catch (error) {
-    console.log(error);
-    return false;
-  }
-};
-
-module.exports = { generateToken, decodeToken, loginUser, verifyUser };
+module.exports = { generateToken, decodeToken, loginUser };
