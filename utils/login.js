@@ -1,6 +1,5 @@
 const jwt = require("jsonwebtoken");
 const models = require("../models");
-const user = require("./user");
 const { JWT_SECRET_KEY } = require("../constants");
 
 const generateToken = ({ ...rest }, expiresIn) => {
@@ -36,7 +35,7 @@ const loginUser = async (resource) => {
 
     const accessToken = generateToken(
       { userCode, userId: dataValues.userId },
-      "5s",
+      "1h",
     );
     const refreshToken = generateToken(
       { userCode, userId: dataValues.userId },
