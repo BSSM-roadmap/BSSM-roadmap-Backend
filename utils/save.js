@@ -29,6 +29,7 @@ const getUserSavedRoadmap = async (userId) => {
   for (let i = 0; i < saveData.length; i++) {
     const roadmapId = saveData[i].dataValues.roadmapId;
     const [roadmap] = await models.Roadmap.findAll({ where: { roadmapId } });
+    roadmap.dataValues.saveCount = await getSaveCount(roadmapId);
     data[i] = roadmap;
   }
   return data;
