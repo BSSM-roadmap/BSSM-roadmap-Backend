@@ -134,7 +134,9 @@ app.get("/user/:userId/roadmap", async (request, response) => {
 // 로드맵 전체 조회
 app.get("/roadmap", async (request, response) => {
   try {
-    const data = await roadmap.getRoadmapData();
+    const accessToken = request.headers.authorization;
+    const { userCode } = login.decodeToken(accessToken);
+    const data = await roadmap.getRoadmapData(userCode);
     response.send(data);
   } catch (error) {
     console.log(error);

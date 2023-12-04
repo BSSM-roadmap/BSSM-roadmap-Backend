@@ -1,6 +1,8 @@
 const models = require("../models");
+const user = require("./user");
+const save = require("./save");
 
-const getRoadmapData = async () => {
+const getRoadmapData = async (userCode) => {
   const roadmap = await models.Roadmap.findAll();
   const copiedData = [...roadmap];
   let data = [];
@@ -8,7 +10,20 @@ const getRoadmapData = async () => {
   for (let i = 0; i < copiedData.length; i++) {
     let { dataValues } = copiedData[i];
     dataValues.steps = dataValues.steps.split(",");
+    dataValues.saveCount = await save.getSaveCount(dataValues.roadmapId);
+    dataValues.saveState = false;
     data[i] = dataValues;
+  }
+
+  const { userId } = (await user.getUserData(userCode)).dataValues;
+  const savedRoadmap = await save.getUserSavedRoadmap(userId);
+  for (let i = 0; i < savedRoadmap.length; i++) {
+    for (let j = 0; j < data.length; j++) {
+      if (savedRoadmap[i].dataValues.roadmapId === data[j].roadmapId) {
+        data[j].saveState = true;
+        break;
+      }
+    }
   }
 
   return data;
@@ -22,7 +37,19 @@ const getUserRoadmapData = async (userId) => {
   for (let i = 0; i < copiedData.length; i++) {
     let { dataValues } = copiedData[i];
     dataValues.steps = dataValues.steps.split(",");
+    dataValues.saveCount = await save.getSaveCount(dataValues.roadmapId);
+    dataValues.saveState = false;
     data[i] = dataValues;
+  }
+
+  const savedRoadmap = await save.getUserSavedRoadmap(userId);
+  for (let i = 0; i < savedRoadmap.length; i++) {
+    for (let j = 0; j < data.length; j++) {
+      if (savedRoadmap[i].dataValues.roadmapId === data[j].roadmapId) {
+        data[j].saveState = true;
+        break;
+      }
+    }
   }
 
   return data;
