@@ -135,7 +135,8 @@ app.get("/user/:userId/roadmap", async (request, response) => {
 app.get("/roadmap", async (request, response) => {
   try {
     const accessToken = request.headers.authorization;
-    const { userCode } = login.decodeToken(accessToken);
+    let userCode = null;
+    if (accessToken) userCode = login.decodeToken(accessToken).userCode;
     const data = await roadmap.getRoadmapData(userCode);
     response.send(data);
   } catch (error) {

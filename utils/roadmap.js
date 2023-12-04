@@ -15,13 +15,15 @@ const getRoadmapData = async (userCode) => {
     data[i] = dataValues;
   }
 
-  const { userId } = (await user.getUserData(userCode)).dataValues;
-  const savedRoadmap = await save.getUserSavedRoadmap(userId);
-  for (let i = 0; i < savedRoadmap.length; i++) {
-    for (let j = 0; j < data.length; j++) {
-      if (savedRoadmap[i].dataValues.roadmapId === data[j].roadmapId) {
-        data[j].saveState = true;
-        break;
+  if (userCode !== null) {
+    const { userId } = (await user.getUserData(userCode)).dataValues;
+    const savedRoadmap = await save.getUserSavedRoadmap(userId);
+    for (let i = 0; i < savedRoadmap.length; i++) {
+      for (let j = 0; j < data.length; j++) {
+        if (savedRoadmap[i].dataValues.roadmapId === data[j].roadmapId) {
+          data[j].saveState = true;
+          break;
+        }
       }
     }
   }
