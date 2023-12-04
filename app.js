@@ -70,7 +70,7 @@ app.post("/login/oauth", async (request, response) => {
 });
 
 // 토큰 재발급
-app.put("/login/token", validateToken, (request, response) => {
+app.put("/login/token", (request, response) => {
   try {
     const refreshToken = request.headers["refresh-token"];
     const { userCode, userId } = login.decodeToken(refreshToken);
