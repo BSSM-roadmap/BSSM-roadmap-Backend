@@ -122,8 +122,11 @@ app.get("/user/:userId", async (request, response) => {
 // 특정 유저의 로드맵 조회
 app.get("/user/:userId/roadmap", async (request, response) => {
   try {
+    const accessToken = request.headers.authorization;
     const userId = request.params.userId;
-    const data = await roadmap.getUserRoadmapData(userId);
+    let userCode = null;
+    if (accessToken) userCode = login.decodeToken(accessToken).userCode;
+    const data = await roadmap.getUserRoadmapData(userId, userCode);
     response.send(data);
   } catch (error) {
     console.log(error);

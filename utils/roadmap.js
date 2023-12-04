@@ -31,7 +31,7 @@ const getRoadmapData = async (userCode) => {
   return data;
 };
 
-const getUserRoadmapData = async (userId) => {
+const getUserRoadmapData = async (userId, userCode) => {
   const roadmap = await models.Roadmap.findAll({ where: { userId } });
   const copiedData = [...roadmap];
   let data = [];
@@ -44,16 +44,17 @@ const getUserRoadmapData = async (userId) => {
     data[i] = dataValues;
   }
 
-  const savedRoadmap = await save.getUserSavedRoadmap(userId);
-  for (let i = 0; i < savedRoadmap.length; i++) {
-    for (let j = 0; j < data.length; j++) {
-      if (savedRoadmap[i].dataValues.roadmapId === data[j].roadmapId) {
-        data[j].saveState = true;
-        break;
+  if (userCode !== null) {
+    const savedRoadmap = await save.getUserSavedRoadmap(userId);
+    for (let i = 0; i < savedRoadmap.length; i++) {
+      for (let j = 0; j < data.length; j++) {
+        if (savedRoadmap[i].dataValues.roadmapId === data[j].roadmapId) {
+          data[j].saveState = true;
+          break;
+        }
       }
     }
   }
-
   return data;
 };
 
