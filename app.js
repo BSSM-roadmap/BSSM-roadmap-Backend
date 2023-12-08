@@ -168,7 +168,7 @@ app.get("/roadmap/:roadmapId", async (request, response) => {
     dataValues.steps = dataValues.steps.split(",");
     const temp = [];
     dataValues.steps.forEach((step) => {
-      step = step.replace(process.env.REPLACE_KEY, ",");
+      step = step.replaceAll(process.env.replaceAll_KEY, ",");
       console.log(step);
       temp.push(step);
     });

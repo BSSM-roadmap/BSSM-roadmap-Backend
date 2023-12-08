@@ -12,7 +12,7 @@ const getRoadmapData = async (userCode) => {
     dataValues.steps = dataValues.steps.split(",");
     const temp = [];
     dataValues.steps.forEach((step) => {
-      step = step.replace(process.env.REPLACE_KEY, ",");
+      step = step.replaceAll(process.env.replaceAll_KEY, ",");
       console.log(step);
       temp.push(step);
     });
@@ -48,7 +48,7 @@ const getUserRoadmapData = async (userId, userCode) => {
     dataValues.steps = dataValues.steps.split(",");
     const temp = [];
     dataValues.steps.forEach((step) => {
-      step = step.replace(process.env.REPLACE_KEY, ",");
+      step = step.replaceAll(process.env.replaceAll_KEY, ",");
       console.log(step);
       temp.push(step);
     });
@@ -75,7 +75,7 @@ const getUserRoadmapData = async (userId, userCode) => {
 const addRoadmap = async (userId, steps) => {
   const copiedSteps = [];
   steps.forEach((step) => {
-    step = step.replace(",", process.env.REPLACE_KEY);
+    step = step.replaceAll(",", process.env.replaceAll_KEY);
     copiedSteps.push(step);
   });
   const newSteps = copiedSteps.toString();
@@ -96,7 +96,7 @@ const updateSelectedRoadmap = async (roadmapId, steps) => {
   const copiedSteps = [...steps];
   const realSteps = [];
   copiedSteps.forEach((step) => {
-    step = step.replace(",", process.env.REPLACE_KEY);
+    step = step.replaceAll(",", process.env.replaceAll_KEY);
     realSteps.push(step);
   });
   const newSteps = realSteps.toString();

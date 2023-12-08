@@ -32,7 +32,7 @@ const getUserSavedRoadmap = async (userId) => {
     roadmap.dataValues.saveCount = await getSaveCount(roadmapId);
     roadmap.dataValues.steps = roadmap.dataValues.steps.split(",");
     roadmap.dataValues.steps.forEach((step) =>
-      step.replace(process.env.REPLACE_KEY, ","),
+      step.replaceAll(process.env.replaceAll_KEY, ","),
     );
     roadmap.dataValues.saveState = true;
     data[i] = roadmap;
