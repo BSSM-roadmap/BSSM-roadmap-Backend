@@ -10,9 +10,13 @@ const getRoadmapData = async (userCode) => {
   for (let i = 0; i < copiedData.length; i++) {
     let { dataValues } = copiedData[i];
     dataValues.steps = dataValues.steps.split(",");
-    dataValues.steps.forEach((step) =>
-      step.replace(process.env.REPLACE_KEY, ","),
-    );
+    const temp = [];
+    dataValues.steps.forEach((step) => {
+      step = step.replace(process.env.REPLACE_KEY, ",");
+      console.log(step);
+      temp.push(step);
+    });
+    dataValues.steps = temp;
     dataValues.saveCount = await save.getSaveCount(dataValues.roadmapId);
     dataValues.saveState = false;
     data[i] = dataValues;
@@ -42,9 +46,13 @@ const getUserRoadmapData = async (userId, userCode) => {
   for (let i = 0; i < copiedData.length; i++) {
     let { dataValues } = copiedData[i];
     dataValues.steps = dataValues.steps.split(",");
-    dataValues.steps.forEach((step) =>
-      step.replace(process.env.REPLACE_KEY, ","),
-    );
+    const temp = [];
+    dataValues.steps.forEach((step) => {
+      step = step.replace(process.env.REPLACE_KEY, ",");
+      console.log(step);
+      temp.push(step);
+    });
+    dataValues.steps = temp;
     dataValues.saveCount = await save.getSaveCount(dataValues.roadmapId);
     dataValues.saveState = false;
     data[i] = dataValues;
@@ -65,8 +73,11 @@ const getUserRoadmapData = async (userId, userCode) => {
 };
 
 const addRoadmap = async (userId, steps) => {
-  const copiedSteps = [...steps];
-  copiedSteps.forEach((step) => step.replace(",", process.env.REPLACE_KEY));
+  const copiedSteps = [];
+  steps.forEach((step) => {
+    step = step.replace(",", process.env.REPLACE_KEY);
+    copiedSteps.push(step);
+  });
   const newSteps = copiedSteps.toString();
   const data = await models.Roadmap.create({ userId, steps: newSteps });
   return data;
@@ -83,8 +94,13 @@ const updateSelectedRoadmap = async (roadmapId, steps) => {
   });
   if (selectedRoadmap === null) return null;
   const copiedSteps = [...steps];
-  const newSteps = copiedSteps.toString();
-  copiedSteps.forEach((step) => step.replace(",", process.env.REPLACE_KEY));
+  const realSteps = [];
+  copiedSteps.forEach((step) => {
+    step = step.replace(",", process.env.REPLACE_KEY);
+    realSteps.push(step);
+  });
+  const newSteps = realSteps.toString();
+
   const data = await models.Roadmap.update(
     { steps: newSteps },
     { where: { roadmapId } },

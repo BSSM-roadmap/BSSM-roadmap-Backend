@@ -166,9 +166,13 @@ app.get("/roadmap/:roadmapId", async (request, response) => {
     const data = await roadmap.getSelectedRoadmapData(roadmapId);
     let { dataValues } = data;
     dataValues.steps = dataValues.steps.split(",");
-    dataValues.steps.forEach((step) =>
-      step.replace(process.env.REPLACE_KEY, ","),
-    );
+    const temp = [];
+    dataValues.steps.forEach((step) => {
+      step = step.replace(process.env.REPLACE_KEY, ",");
+      console.log(step);
+      temp.push(step);
+    });
+    dataValues.steps = temp;
     response.send(dataValues);
   } catch (error) {
     console.log(error);
