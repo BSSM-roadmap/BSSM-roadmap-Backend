@@ -9,7 +9,7 @@ const getRoadmapData = async (userCode) => {
 
   for (let i = 0; i < copiedData.length; i++) {
     let { dataValues } = copiedData[i];
-    dataValues.steps = dataValues.steps.split("`@$!*(&-),");
+    dataValues.steps = dataValues.steps.split(" ,");
     dataValues.saveCount = await save.getSaveCount(dataValues.roadmapId);
     dataValues.saveState = false;
     data[i] = dataValues;
@@ -38,7 +38,7 @@ const getUserRoadmapData = async (userId, userCode) => {
 
   for (let i = 0; i < copiedData.length; i++) {
     let { dataValues } = copiedData[i];
-    dataValues.steps = dataValues.steps.split("`@$!*(&-),");
+    dataValues.steps = dataValues.steps.split(" ,");
     dataValues.saveCount = await save.getSaveCount(dataValues.roadmapId);
     dataValues.saveState = false;
     data[i] = dataValues;
