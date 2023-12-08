@@ -165,7 +165,7 @@ app.get("/roadmap/:roadmapId", async (request, response) => {
     const { roadmapId } = request.params;
     const data = await roadmap.getSelectedRoadmapData(roadmapId);
     let { dataValues } = data;
-    dataValues.steps = dataValues.steps.split(",");
+    dataValues.steps = dataValues.steps.split("`@$!*(&-),");
     response.send(dataValues);
   } catch (error) {
     console.log(error);

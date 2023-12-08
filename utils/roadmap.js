@@ -9,7 +9,7 @@ const getRoadmapData = async (userCode) => {
 
   for (let i = 0; i < copiedData.length; i++) {
     let { dataValues } = copiedData[i];
-    dataValues.steps = dataValues.steps.split(",");
+    dataValues.steps = dataValues.steps.split("`@$!*(&-),");
     dataValues.saveCount = await save.getSaveCount(dataValues.roadmapId);
     dataValues.saveState = false;
     data[i] = dataValues;
@@ -38,7 +38,7 @@ const getUserRoadmapData = async (userId, userCode) => {
 
   for (let i = 0; i < copiedData.length; i++) {
     let { dataValues } = copiedData[i];
-    dataValues.steps = dataValues.steps.split(",");
+    dataValues.steps = dataValues.steps.split("`@$!*(&-),");
     dataValues.saveCount = await save.getSaveCount(dataValues.roadmapId);
     dataValues.saveState = false;
     data[i] = dataValues;
@@ -61,6 +61,7 @@ const getUserRoadmapData = async (userId, userCode) => {
 const addRoadmap = async (userId, steps) => {
   const copiedSteps = [...steps];
   const newSteps = copiedSteps.toString();
+  newSteps.replace(",", "`@$!*(&-),");
   const data = await models.Roadmap.create({ userId, steps: newSteps });
   return data;
 };
@@ -77,6 +78,7 @@ const updateSelectedRoadmap = async (roadmapId, steps) => {
   if (selectedRoadmap === null) return null;
   const copiedSteps = [...steps];
   const newSteps = copiedSteps.toString();
+  newSteps.replace(",", "`@$!*(&-),");
   const data = await models.Roadmap.update(
     { steps: newSteps },
     { where: { roadmapId } },
