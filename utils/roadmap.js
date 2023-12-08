@@ -61,7 +61,6 @@ const getUserRoadmapData = async (userId, userCode) => {
 const addRoadmap = async (userId, steps) => {
   const copiedSteps = [...steps];
   const newSteps = copiedSteps.toString();
-  newSteps.replace(",", "`@$!*(&-),");
   const data = await models.Roadmap.create({ userId, steps: newSteps });
   return data;
 };
@@ -78,7 +77,6 @@ const updateSelectedRoadmap = async (roadmapId, steps) => {
   if (selectedRoadmap === null) return null;
   const copiedSteps = [...steps];
   const newSteps = copiedSteps.toString();
-  newSteps.replace(",", "`@$!*(&-),");
   const data = await models.Roadmap.update(
     { steps: newSteps },
     { where: { roadmapId } },
